@@ -1,0 +1,62 @@
+/* NICK showLowStock.css */
+
+body {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 100vh;
+  background: #f0f8ff;
+}
+
+.logo {
+  position: absolute;
+  padding: 0px;
+  top: 5px;
+  left: 674px;
+  width: 150;
+  height: 150px;
+  z-index: 1;
+}
+
+.lowstock-container h1 {
+  font-size: 20px;
+  margin-top: 50px;
+  margin-left: 0px;
+  text-align: center;
+}
+
+h2 {
+  font-family: Monospace, Monaco;
+  font-size: 15px;
+  left: 50%;
+  font-weight: 100;
+  margin-left: 0px;
+}
+
+/*table styling
+  https://www.html.am/html-codes/tables/table-border.cfm*/
+
+.lowstock-container {
+  background-color: #f0f8ff;
+  border-collapse: collapse;
+  color: #000;
+  font-size: 18px;
+}
+
+.lowstock-container th {
+  background-color: #bdb76b;
+  color: white;
+  width: 4%;
+  text-align: center;
+}
+
+.lowstock-container td,
+.lowstock-container th {
+  padding: 5px;
+  border: 0;
+}
+
+.lowstock-container td {
+  border-bottom: 1px dotted #bdb76b;
+  text-align: center;
+}
