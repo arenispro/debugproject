@@ -1,0 +1,103 @@
+/* deletefunction.css Bobby*/
+
+
+body {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 80vh;
+    background: #F0F8FF;
+
+}
+
+.deletefunction-container {
+    width: 200px;
+    margin: 50px auto;
+    position: absolute;
+    left: 50px;
+    top: 50px;
+    padding: 20px;
+    background-color: #c46262;
+    border: 1px solid #ccc;
+}
+
+
+h1 {
+    font-size: 20px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+h2 {
+    font-family: Monospace, Monaco;
+    font-size: 15px;
+    font-weight: 100;
+    text-align: center;
+}
+
+
+.deletefunction-container h1 {
+
+    left: 50%;
+    text-align: center;
+    margin-bottom: 20px;
+}
+.deletefunction-container input[type="number"]
+{
+    width: calc(100% - 22px);
+    padding: 10px;  
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.deletefunction-container button {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin-top: 10px;
+    background-color: #db344a;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.deletefunction-container button:hover {
+    width: 210px;
+    background-color: #70242a;
+}
+
+.deletefunction-container .error-message {
+    color: #4c0d94;
+    margin-top: 10px;
+}
+.display-container {
+    margin-left: 300px;
+    padding: 20px;
+    width: 60%;
+    display: inline-block;
+    position: relative;
+    top: 100px;
+}
+
+.display-container table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.display-container th,
+.display-container td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+    background-color: white;
+}
+
+.display-container h1 {
+    text-align: center;
+    position: absolute; 
+    top: -70px;
+    left: 100px; 
+
+}

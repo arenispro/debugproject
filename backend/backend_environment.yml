@@ -1,0 +1,13 @@
+name: backend_environment
+channels:
+  - defaults
+dependencies:
+  - python=3.8
+  - mysql=8.3.0
+  - flask
+  - flask-cors
+  - mysql-connector-python
+  - bcrypt
+  - pip
+  - pip:
+      - logging

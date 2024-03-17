@@ -1,0 +1,59 @@
+.dashboard {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 50px;
+}
+
+.box {
+  width: 300px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.box h2 {
+  margin-top: 0;
+}
+
+.box p {
+  margin-bottom: 0;
+}
+
+.sidebar {
+  height: 100%;
+  width: 200px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #333;
+  padding-top: 20px;
+}
+
+.sidebar h2 {
+  color: white;
+  text-align: center;
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.sidebar li {
+  padding: 8px 16px;
+}
+
+.sidebar a {
+  color: white;
+  text-decoration: none;
+}
+
+.sidebar a:hover {
+  background-color: #555;
+}
+
+.inventory {
+  margin-left: 200px;
+  padding: 20px;
+}
