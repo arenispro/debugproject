@@ -24,6 +24,7 @@ const ShowLowStock: React.FC = () => {
   // Define category state to hold inventory data
   const [lowstock, setLowstock] = useState<LowStock[]>([]);
 
+  //sort the table with ascending or descending order
   const [sortBy, setSortBy] = useState<string | null>(null);
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
 
