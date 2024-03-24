@@ -11,6 +11,7 @@ main_db_config: Dict[str, str] = {
     'host': 'localhost',
     'user': 'root',
     'password': 'Shuijiao2024',
+    #'password': 'Ch0colatecake!',
     'database': 'stock3'
 }
 
@@ -18,5 +19,6 @@ test_db_config: Dict[str, str] = {
     'host': 'localhost',
     'user': 'root',
     'password': 'Shuijiao2024',
+    #'password': 'Ch0colatecake!',
     'database': 'stock3'
 }

@@ -338,92 +338,104 @@ const AddProduct: React.FC = () => {
       </div>
       {/* Render product table */}
       <div className="display-container">
-        <h1>Product Table</h1>
-        <table>
-          <thead>
-            <tr>
-              <th onClick={() => handleSort("product_id")}>Product ID</th>
-              <th onClick={() => handleSort("barcode")}>Barcode</th>
-              <th onClick={() => handleSort("product_name")}>Product Name</th>
-              <th onClick={() => handleSort("product_description")}>
-                Product Description
-              </th>
-              <th onClick={() => handleSort("category_name")}>CAtegory Name</th>
-              <th onClick={() => handleSort("variant_value")}>Variant Value</th>
-            </tr>
-          </thead>
-          <tbody>
-            {sortedProduct.map((item, index) => (
-              <tr key={index}>
-                <td>{item.product_id}</td>
-                <td>{item.barcode}</td>
-                <td>{item.product_name}</td>
-                <td>{item.product_description}</td>
-                {/*<td>{item.product_category}</td>*/}
-                <td>{item.category_name}</td>
-                {/*<td>{item.variant_id}</td>*/}
-                {/*<td>{item.variant_name}</td>*/}
-                <td>{item.variant_value}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-      {/* Render variant table if showVariantTable is true */}
-      {showVariantTable && (
-        <div className="display-container">
-          <h1>Variant Table</h1>
+        <div className="section-content">
+          <h1>Product Table</h1>
           <table>
             <thead>
               <tr>
-                <th onClick={() => handleSort1("variant_id")}>Variant Id</th>
-                <th onClick={() => handleSort1("variant_name")}>
-                  Variant Name
+                <th onClick={() => handleSort("product_id")}>Product ID</th>
+                <th onClick={() => handleSort("barcode")}>Barcode</th>
+                <th onClick={() => handleSort("product_name")}>Product Name</th>
+                <th onClick={() => handleSort("product_description")}>
+                  Product Description
                 </th>
-                <th onClick={() => handleSort1("variant_value")}>
+                <th onClick={() => handleSort("category_name")}>
+                  CAtegory Name
+                </th>
+                <th onClick={() => handleSort("variant_value")}>
                   Variant Value
                 </th>
               </tr>
             </thead>
             <tbody>
-              {sortedVariant.map((item, index) => (
+              {sortedProduct.map((item, index) => (
                 <tr key={index}>
-                  <td>{item.variant_id}</td>
-                  <td>{item.variant_name}</td>
+                  <td>{item.product_id}</td>
+                  <td>{item.barcode}</td>
+                  <td>{item.product_name}</td>
+                  <td>{item.product_description}</td>
+                  {/*<td>{item.product_category}</td>*/}
+                  <td>{item.category_name}</td>
+                  {/*<td>{item.variant_id}</td>*/}
+                  {/*<td>{item.variant_name}</td>*/}
                   <td>{item.variant_value}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
+      </div>
+      {/* Render variant table if showVariantTable is true */}
+      {showVariantTable && (
+        <div className="display-container">
+          <div className="section-content">
+            <h1>Variant Table</h1>
+            <table>
+              <thead>
+                <tr>
+                  <th onClick={() => handleSort1("variant_id")}>Variant Id</th>
+                  <th onClick={() => handleSort1("variant_name")}>
+                    Variant Name
+                  </th>
+                  <th onClick={() => handleSort1("variant_value")}>
+                    Variant Value
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {sortedVariant.map((item, index) => (
+                  <tr key={index}>
+                    <td>{item.variant_id}</td>
+                    <td>{item.variant_name}</td>
+                    <td>{item.variant_value}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
       )}
       {/* Render category table if showCategoryTable is true */}
       {showCategoryTable && (
         <div className="display-container">
-          <h1>Category Table</h1>
-          <table>
-            <thead>
-              <tr>
-                <th onClick={() => handleSort2("category_id")}>Category Id</th>
-                <th onClick={() => handleSort2("category_name")}>
-                  Category Name
-                </th>
-                <th onClick={() => handleSort2("category_description")}>
-                  {" "}
-                  Category Description
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {sortedCategory.map((item, index) => (
-                <tr key={index}>
-                  <td>{item.category_id}</td>
-                  <td>{item.category_name}</td>
-                  <td>{item.category_description}</td>
+          <div className="section-content">
+            <h1>Category Table</h1>
+            <table>
+              <thead>
+                <tr>
+                  <th onClick={() => handleSort2("category_id")}>
+                    Category Id
+                  </th>
+                  <th onClick={() => handleSort2("category_name")}>
+                    Category Name
+                  </th>
+                  <th onClick={() => handleSort2("category_description")}>
+                    {" "}
+                    Category Description
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {sortedCategory.map((item, index) => (
+                  <tr key={index}>
+                    <td>{item.category_id}</td>
+                    <td>{item.category_name}</td>
+                    <td>{item.category_description}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       )}
     </div>

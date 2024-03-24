@@ -1,0 +1,15 @@
+/* SURAIYA 
+   Displays low stock as red and high stock as green to give an idea of how much inventory is left.
+*/
+
+.low-stock {
+  background-color: #ff0003;
+  border-radius: 20px;
+  padding: 6px 10px;
+}
+
+.high-stock {
+  background-color: #1fec2f;
+  border-radius: 20px;
+  padding: 6px 10px;
+}

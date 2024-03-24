@@ -274,60 +274,64 @@ const AddInventory: React.FC = () => {
       </div>
       {/* Render inventory table */}
       <div className="display-container">
-        <h1>Inventory Table</h1>
-        <table>
-          <thead>
-            <tr>
-              <th onClick={() => handleSort("inventory_id")}>Inventory ID</th>
-              <th onClick={() => handleSort("product_id")}>Product ID</th>
-              <th onClick={() => handleSort("product_name")}>Product Name</th>
-              <th onClick={() => handleSort("quantity")}>Quantity</th>
-              <th onClick={() => handleSort("price")}>$Price$</th>
-              <th onClick={() => handleSort("minimum")}>Minimum</th>
-              <th onClick={() => handleSort("maximum")}>Maximum</th>
-              <th onClick={() => handleSort("total_price")}>Total Price</th>
-            </tr>
-          </thead>
-          <tbody>
-            {sortedInventory.map((item, index) => (
-              <tr key={index}>
-                <td>{item.inventory_id}</td>
-                <td>{item.product_id}</td>
-                <td>{item.product_name}</td>
-                <td>{item.quantity}</td>
-                <td>{item.price}</td>
-                <td>{item.minimum}</td>
-                <td>{item.maximum}</td>
-                <td>{(item.quantity * item.price).toFixed(2)}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-      {/* Render Product table if showProductTable is true */}
-      {showProductTable && (
-        <div className="display-container">
-          <h1>Product Table</h1>
+        <div className="section-content">
+          <h1>Inventory Table</h1>
           <table>
             <thead>
               <tr>
-                <th onClick={() => handleSort1("product_id")}>Product ID</th>
-                <th onClick={() => handleSort1("barcode")}>Barcode</th>
-                <th onClick={() => handleSort1("product_name")}>
-                  Product Name
-                </th>
+                <th onClick={() => handleSort("inventory_id")}>Inventory ID</th>
+                <th onClick={() => handleSort("product_id")}>Product ID</th>
+                <th onClick={() => handleSort("product_name")}>Product Name</th>
+                <th onClick={() => handleSort("quantity")}>Quantity</th>
+                <th onClick={() => handleSort("price")}>$Price$</th>
+                <th onClick={() => handleSort("minimum")}>Minimum</th>
+                <th onClick={() => handleSort("maximum")}>Maximum</th>
+                <th onClick={() => handleSort("total_price")}>Total Price</th>
               </tr>
             </thead>
             <tbody>
-              {sortedProduct.map((item, index) => (
+              {sortedInventory.map((item, index) => (
                 <tr key={index}>
+                  <td>{item.inventory_id}</td>
                   <td>{item.product_id}</td>
-                  <td>{item.barcode}</td>
                   <td>{item.product_name}</td>
+                  <td>{item.quantity}</td>
+                  <td>{item.price}</td>
+                  <td>{item.minimum}</td>
+                  <td>{item.maximum}</td>
+                  <td>{(item.quantity * item.price).toFixed(2)}</td>
                 </tr>
               ))}
             </tbody>
           </table>
+        </div>
+      </div>
+      {/* Render Product table if showProductTable is true */}
+      {showProductTable && (
+        <div className="display-container">
+          <div className="section-content">
+            <h1>Product Table</h1>
+            <table>
+              <thead>
+                <tr>
+                  <th onClick={() => handleSort1("product_id")}>Product ID</th>
+                  <th onClick={() => handleSort1("barcode")}>Barcode</th>
+                  <th onClick={() => handleSort1("product_name")}>
+                    Product Name
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {sortedProduct.map((item, index) => (
+                  <tr key={index}>
+                    <td>{item.product_id}</td>
+                    <td>{item.barcode}</td>
+                    <td>{item.product_name}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       )}
     </div>

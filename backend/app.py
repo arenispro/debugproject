@@ -1,5 +1,5 @@
-from flask import Flask, request, jsonify, redirect, url_for
-from flask_cors import CORS # cors helps frontend communicate/make requests to the backend. used with flask 
+from flask import Flask, request, jsonify, redirect, url_for, session
+from flask_cors import CORS # cors helps frontend communicate/make requests to the backend. used with flask
 import mysql.connector
 from typing import List, Tuple, Dict, Any 
 import bcrypt # hashing
@@ -8,6 +8,9 @@ import requests
 from db import DatabaseConnection
 import json
 from config import test_db_config, main_db_config
+from flask_session import Session
+from datetime import timedelta
+from flask_login import LoginManager
 from flask import session
 import re
 
@@ -15,16 +18,28 @@ import re
 # SURAIYA 
 logging.basicConfig(level=logging.DEBUG)
 
-#For testing, set USE_TEST_DB to True.
-#In the backend terminal, type pytest. 
 
-#if just using app to just do regular creating new user and mess with database leave as false
-USE_TEST_DB = False 
+
+USE_TEST_DB = False # Change to True when testing 
 
 app = Flask(__name__)
-CORS(app)
-app.testing = USE_TEST_DB
+# Below two are for sessions, not working very well
+app.config['SESSION_TYPE'] = 'filesystem'
+#app.session_interface = FilesystemSessionInterface()
+app.secret_key = 'greengreengrass'
+Session(app)
 
+CORS(app)
+
+# Configs for session
+CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}}, supports_credentials=True)
+app.config['SESSION_COOKIE_SECURE'] = True  # Ensure cookie is only sent over HTTPS
+app.config['SESSION_COOKIE_SAMESITE'] = 'None'
+#CORS(app, supports_credentials=True)
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=30)
+
+
+app.testing = USE_TEST_DB
 
 
 # If USE_TEST_DB variable is set to True, testing is being done and the test database should be used. 
@@ -49,7 +64,13 @@ else:
 #    'database': 'my_inventory'
 #}
 
+
+global roles
+roles ='Amin';#added to implement roles
+
 logging.info('Flask initialized')
+
+
 
 
 #################################### LOGIN ROUTE - SURAIYA ####################################
@@ -60,12 +81,12 @@ logging.info('Flask initialized')
 '''
 @app.route('/login', methods = ['POST'])
 def login() -> Any:
+    print("ACCESSED LOGIN")
     logging.info('Login request received')
     # Store data received by frontend in variables 
     data: Dict[str, str] = request.json
     username: str = data.get('username', '')
     password: str = data.get('password', '')
-    #session['username'] = username
 
     if (username == '' or password == ''):
         return jsonify({'message': "Required boxes not filled."}), 400
@@ -80,6 +101,10 @@ def login() -> Any:
         cursor.execute("SELECT * FROM user WHERE username = %s", (username,))
         user = cursor.fetchone()
 
+
+        global roles
+        roles = user.get('role') # ADDED TO IMPLEMENT ROLES
+
         # Close connection with the database 
         cursor.close()
         connection.close()
@@ -92,8 +117,13 @@ def login() -> Any:
                 #logging.debug(f'Hashed Password from Database: {hashed_pw}')
                 #logging.debug(f'Hashed Password Entered: {hash_password(password)}')
                 if bcrypt.checkpw(password.encode('utf-8'), hashed_pw.encode('utf-8')): 
+                    session['username'] = username
+                    session_data = session.get('username')
+                    session.modified = True
+                    print("Session Data:", session_data)
+
                     logging.info('successful!')
-                    return jsonify({'message': 'Login successful'}), 200
+                    return jsonify({'message': 'Login successful'},{'roles':roles}), 200 #added the second bracket for roles implementation JUSTIN
                 else:
                     logging.info('Invalid password')
                     return jsonify({'message': 'Invalid password'}), 401
@@ -269,7 +299,7 @@ def email_validation():
     # except requests.RequestException as e
     except Exception as e:
         return jsonify({'error': str(e.response.data)}), 500   
-    
+
 
 #################################### Product ROUTE - BOBBY ####################################
 #https://www.tutorialspoint.com/how-can-you-perform-inner-join-on-two-tables-using-mysql-in-python
@@ -538,7 +568,7 @@ def add_product() -> Any:
    # https://regex101.com/r/FPl92N/1
 def is_valid_price(str):
     # Define the pattern to match "$X.XX" format
-    regex = "^\d+\.\d{2}$"
+    regex = "^\\d+\\.\\d{2}$"
     # Compile the ReGex
     p = re.compile(regex)
  
@@ -955,7 +985,6 @@ def delete_category() -> Any:
         return jsonify({'message': 'Database error occurred: {}'.format(error)}), 500
 
 
-
 '''
     This function is going to be in charge of creating a dictionary from the multiple rows fetched from our database.
     It is only implemented for 4 columns tho. so it needs to be revised to handle multiple column if it is going to be 
@@ -991,7 +1020,6 @@ def show_low_stock() -> Any:
         ON inventory.product_id=product.product_id
         ORDER BY quantity, barcode
         LIMIT 20;
-
         '''
         
         cursor.execute(query)
@@ -1022,32 +1050,48 @@ def show_low_stock() -> Any:
     
 
 
-#################################### DASHBOARD ROUTE - JUSTIN ####################################
+
+
+
+#################################### DASHBOARD ROUTE - SURAIYA ####################################
+'''
+    The dashboard is the main page of the product. It displays inventory information and gives users options to interact with the 
+    inventory. 
+'''
+@app.route("/dashboard", methods=['GET'])
+#@login_required
+def dashboard() -> Any:
+    print("IN THE DASH")
+    session_data = session.get('username')
+    session.modified = True
+    print("Session Data:", session_data)
+  
+
+#################################### FETCH INVENTORY ROUTE - JUSTIN ####################################
 def rows_to_dict(rows):
     json_dict = []
     for row in rows:
         # Convert each row tuple to a dictionary
         row_dict = {
-            'id': row[0],
+            'inventory_id': row[0],
             'product_name': row[1],
-            'product_desc': row[2],
+            'product_description': row[2],
             'quantity': row[3],
+            'roles':roles,
             #'product_category':row[4]
         }
         json_dict.append(row_dict)
     return json_dict
 
-@app.route("/dashboard", methods=['GET'])
-def dashboard() -> Any:
-    # TRYING SESSION BUT ISN'T WORKING. WILL WORK ON LATER. -SURAIYA 
-    #if 'username' not in session:
-    #    return redirect(url_for('login'))        
+@app.route("/fetch_inventory", methods=['GET'])
+def fetch_inventory() -> Any:
+    print("ACCESSED FETCH INV")
 
     try :
         conn = mysql.connector.connect(**db_config)
         cursor = conn.cursor()
 
-        
+
 
         cursor.execute("SELECT inventory_id, product_name, product_description, quantity FROM inventory JOIN product ON inventory.product_id = product.product_id")
         rows = cursor.fetchall() #This rows variable has all the rows in it, I have to deconstruct each rows
@@ -1064,25 +1108,108 @@ def dashboard() -> Any:
         return jsonify({'message': 'Database error occurred: {}'.format(error)}), 500
 
 
+
+
 #################################### LOGOUT ROUTE (not working yet)- SURAIYA ####################################
 '''
-    Logging out route logs out. 
-    It works (?) but clicking the back button on the browser brings it from login page back 
-    to dashboard, which shouldn't happen. User needs to login again before accessing dashboard.
-    Work in progress!
+    Logging out route allows users to logout. If the user logs out, they will not be able to access the dashboard until they login. 
+    If they try to access the dash, they are redirected to the login page. 
+    Maybe uses sessions to do this (?), but mainly local storage. Sessions were being tricky. 
 '''
-#@app.route('/logout', methods=['GET', 'POST'])
-@app.route('/logout', methods=['GET'])
-def logout()  -> Any:
-    session.clear()
-    return 'Logged out successful'
+@app.route("/logout", methods=['POST'])
+def logout() -> Any:
+    print("ACCESSED LOGOUT ROUTE")
+    #session.clear()
+    try:
+        session_data_before = session.get('username')
+        print("Session Data Before Logout:", session_data_before)
+        session.clear()
+        session.modified = True
+        session_data_after = session.get('username')
+        print("Session Data After Logout:", session_data_after)
+
+        response_data = {'message': 'Logout successful'}
+        response = jsonify(response_data)
+        response.delete_cookie('session', domain='localhost', secure=True, httponly=True)
+        
+        return response, 200
+    except Exception as e:
+        error_message = 'Logout failed: {}'.format(str(e))
+        return jsonify({'error': error_message}), 500
+
+
+#################################### FILTERING ROUTES - Suraiya ####################################
+'''
+    filter_page is the page the user can go to if they want to find products by filtering them. Users can only filter by 
+    category and variant, so this route fetches that information from the database to give options to user. (This basically 
+    renders categories and variants, doesn't do any actual filtering!) 
+'''
+@app.route('/filter_page')
+def filter_page():
+    try:
+        conn = mysql.connector.connect(**db_config)
+        cursor = conn.cursor()
+        cursor.execute("SELECT category_id, category_name, category_description FROM category")
+        categories = cursor.fetchall()
+
+        cursor.execute("SELECT variant_id, variant_name, variant_value FROM variant")
+        variants = cursor.fetchall()
+
+        cursor.close()
+
+
+        return jsonify({
+            'categories': categories,
+            'variants': variants
+        })
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+'''
+    filter_products gets called to do the filtering. It takes the category and variant the user chooses as parameters and 
+    accesses the database with them. Once it finds products with the specific category and/or variant, it returns them to
+    frontend as a json array.
+'''
+@app.route('/filter_products', methods=['GET'])
+def get_products():
+    try:
+        category_id = request.args.get('category')
+        variant_id = request.args.get('variant')
+
+        conn = mysql.connector.connect(**db_config)
+        cursor = conn.cursor()
+        query = "SELECT product_id, barcode, product_name, product_description, product_category, variant_id FROM product"
+        params = []
+
+        if category_id is not None and variant_id is not None:
+            query += " WHERE product_category = %s AND variant_id = %s"
+            params = [category_id, variant_id]
+        elif category_id is not None:
+            query += " WHERE product_category = %s"
+            params = [category_id]
+        elif variant_id is not None:
+            query += " WHERE variant_id = %s"
+            params = [variant_id]
+
+        cursor.execute(query, params)
+        products = cursor.fetchall()
+        cursor.close()
+
+        response = jsonify(products)
+        return response
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
 
 
 @app.route("/")
 def home() -> str:
     return "Hello Flask! this means server is up and running\nDatabase: my_inventorry"
 
-
+# Suraiya 
 # Disable caching: https://stackoverflow.com/questions/34066804/disabling-caching-in-flask
 # Trying it out for sessions
 @app.after_request
@@ -1095,7 +1222,4 @@ def add_header(r):
     return r
 
 if __name__ == '__main__':
-    # Below two are for sessions, not working very well
-    app.secret_key = 'greengreengrass'
-    app.config['SESSION_TYPE'] = 'filesystem'
     app.run(debug=True)

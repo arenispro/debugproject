@@ -139,33 +139,35 @@ const DeleteProduct: React.FC = () => {
       </div>
       {/* Render product table */}
       <div className="display-container">
-        <h1>Product Table</h1>
-        <table>
-          <thead>
-            <tr>
-              <th onClick={() => handleSort("product_id")}>Product ID</th>
-              <th onClick={() => handleSort("barcode")}>Barcode</th>
-              <th onClick={() => handleSort("product_name")}>Product Name</th>
-              <th onClick={() => handleSort("product_description")}>
-                Description
-              </th>
-              <th onClick={() => handleSort("product_category")}>Category</th>
-              <th onClick={() => handleSort("variant_id")}>Variant Id</th>
-            </tr>
-          </thead>
-          <tbody>
-            {sortedProduct.map((item, index) => (
-              <tr key={index}>
-                <td>{item.product_id}</td>
-                <td>{item.barcode}</td>
-                <td>{item.product_name}</td>
-                <td>{item.product_description}</td>
-                <td>{item.product_category}</td>
-                <td>{item.variant_id}</td>
+        <div className="section-content">
+          <h1>Product Table</h1>
+          <table>
+            <thead>
+              <tr>
+                <th onClick={() => handleSort("product_id")}>Product ID</th>
+                <th onClick={() => handleSort("barcode")}>Barcode</th>
+                <th onClick={() => handleSort("product_name")}>Product Name</th>
+                <th onClick={() => handleSort("product_description")}>
+                  Description
+                </th>
+                <th onClick={() => handleSort("product_category")}>Category</th>
+                <th onClick={() => handleSort("variant_id")}>Variant Id</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {sortedProduct.map((item, index) => (
+                <tr key={index}>
+                  <td>{item.product_id}</td>
+                  <td>{item.barcode}</td>
+                  <td>{item.product_name}</td>
+                  <td>{item.product_description}</td>
+                  <td>{item.product_category}</td>
+                  <td>{item.variant_id}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

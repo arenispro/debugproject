@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./Login";
 import Dashboard from "./Dashboard";
+import ProtectedRoute from "./ProtectedRoute"; // Import ProtectedRoute component
 import "./App.css";
 import Registration from "./Registration";
 import AddProduct from "./addProduct"; // Import the Product component
@@ -13,10 +14,15 @@ import DeleteProduct from "./deleteProduct";
 import DeleteVariant from "./deleteVariant";
 import DeleteInventory from "./deleteInventory";
 import DeleteCategory from "./deleteCategory";
-import ShowLowStock from "./showLowStock"; //Import ShowLowStock component
-//import 'bootstrap/dist/css/bootstrap.min.css';
+import Filter from "./FilterPage";
 
 const App: React.FC = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+
+  useEffect(() => {
+    const loggedIn = localStorage.getItem("isLoggedIn");
+    setIsLoggedIn(loggedIn === "true");
+  }, []);
   return (
     <Router>
       <Routes>
@@ -32,7 +38,7 @@ const App: React.FC = () => {
         <Route path="/deleteInventory" element={<DeleteInventory />} />
         <Route path="/addVariant" element={<AddVariant />} />
         <Route path="/deleteVariant" element={<DeleteVariant />} />
-        <Route path="/showLowStock" element={<ShowLowStock />} />
+        <Route path="/filter_page" element={<Filter />} />
         <Route path="*" element={<div>404</div>} />
       </Routes>
     </Router>
@@ -40,3 +46,10 @@ const App: React.FC = () => {
 };
 
 export default App;
+// import FetchInventoryData from "./FetchInventoryData";
+
+// <Route path="/fetch_inventory" element={<FetchInventoryData />} />
+
+// import ShowLowStock from "./showLowStock"; //Import ShowLowStock component
+
+// <Route path="/showLowStock" element={<ShowLowStock />} />

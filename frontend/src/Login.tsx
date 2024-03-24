@@ -23,6 +23,7 @@ const Login: React.FC = () => {
   */
   const handleLogin = async () => {
     try {
+      console.log("Sending login request:", { username, password });
       console.log("Username: ", username);
       console.log("Password: ", password);
       const response = await fetch("http://127.0.0.1:5000/login", {
@@ -31,15 +32,20 @@ const Login: React.FC = () => {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify({ username, password }),
       });
+      console.log("Received login response:", response);
       if (response.ok) {
         // handle successful response by navigating to the dashboard
         // Successful login
+        localStorage.setItem("isLoggedIn", "true");
+        console.log("Login successful");
         navigate("/dashboard");
       } else {
         // handle unsuccessful response by setting error message to be rendered
         // Failed login
+        console.log("Login failed");
         const errorMessage = await response.json();
         setError(errorMessage.message);
         //setErrora('Invalid username or password');

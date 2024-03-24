@@ -260,84 +260,88 @@ const UpdateInventory: React.FC = () => {
     <div className="updatefunction-table">
       {/* Render update form */}
       <div className="updatefunction-container">
-        <h1>Update new Inventory</h1>
-        <div className="updatefunction-form">
-          <h3>Product ID</h3>
-          <input
-            type="number"
-            value={product_id}
-            onChange={(e) => setProduct_id(e.target.value)}
-            placeholder="Product Id"
-          />
-          <div />
-          <h3>Quantity</h3>
-          <input
-            type="number"
-            value={quantity}
-            onChange={(e) => setQuantity(e.target.value)}
-            placeholder="Quantity"
-          />
-          <button onClick={handleQuantity}>Update Quantity</button>
-          {error1 && <div>{error1}</div>}
-          <h3>Price</h3>
-          <input
-            type="number"
-            value={price}
-            onChange={(e) => setPrice(e.target.value)}
-            placeholder="Price"
-          />
-          <button onClick={handlePrice}>Update Price</button>
-          {error4 && <div>{error4}</div>}
-          <h3>Minimum</h3>
-          <input
-            type="number"
-            value={minimum}
-            onChange={(e) => setMinimum(e.target.value)}
-            placeholder="Minimum"
-          />
-          <button onClick={handleMinimum}>Update Minimum</button>
-          {error2 && <div>{error2}</div>}
-          <h3>Maximum</h3>
-          <input
-            type="number"
-            value={maximum}
-            onChange={(e) => setMaximum(e.target.value)}
-            placeholder="Maximum"
-          />
-          <button onClick={handleMaximum}>Update Maximum</button>
-          {error3 && <div>{error3}</div>}
-          <button onClick={goBackToDashboard}>Go back to Dashboard</button>
+        <div className="section-content">
+          <h1>Update new Inventory</h1>
+          <div className="updatefunction-form">
+            <h3>Product ID</h3>
+            <input
+              type="number"
+              value={product_id}
+              onChange={(e) => setProduct_id(e.target.value)}
+              placeholder="Product Id"
+            />
+            <div />
+            <h3>Quantity</h3>
+            <input
+              type="number"
+              value={quantity}
+              onChange={(e) => setQuantity(e.target.value)}
+              placeholder="Quantity"
+            />
+            <button onClick={handleQuantity}>Update Quantity</button>
+            {error1 && <div>{error1}</div>}
+            <h3>Price</h3>
+            <input
+              type="number"
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
+              placeholder="Price"
+            />
+            <button onClick={handlePrice}>Update Price</button>
+            {error4 && <div>{error4}</div>}
+            <h3>Minimum</h3>
+            <input
+              type="number"
+              value={minimum}
+              onChange={(e) => setMinimum(e.target.value)}
+              placeholder="Minimum"
+            />
+            <button onClick={handleMinimum}>Update Minimum</button>
+            {error2 && <div>{error2}</div>}
+            <h3>Maximum</h3>
+            <input
+              type="number"
+              value={maximum}
+              onChange={(e) => setMaximum(e.target.value)}
+              placeholder="Maximum"
+            />
+            <button onClick={handleMaximum}>Update Maximum</button>
+            {error3 && <div>{error3}</div>}
+            <button onClick={goBackToDashboard}>Go back to Dashboard</button>
+          </div>
         </div>
       </div>
       {/* Render inventory table */}
       <div className="display-container">
-        <h1>Inventory Table</h1>
-        <table>
-          <thead>
-            <tr>
-              <th onClick={() => handleSort("product_id")}>Product ID</th>
-              <th onClick={() => handleSort("product_name")}>Product Name</th>
-              <th onClick={() => handleSort("quantity")}>Quantity</th>
-              <th onClick={() => handleSort("price")}>$Price$</th>
-              <th onClick={() => handleSort("minimum")}>Minimum</th>
-              <th onClick={() => handleSort("maximum")}>Maximum</th>
-              <th onClick={() => handleSort("total_price")}>Total Price</th>
-            </tr>
-          </thead>
-          <tbody>
-            {sortedInventory.map((item, index) => (
-              <tr key={index}>
-                <td>{item.product_id}</td>
-                <td>{item.product_name}</td>
-                <td>{item.quantity}</td>
-                <td>{item.price}</td>
-                <td>{item.minimum}</td>
-                <td>{item.maximum}</td>
-                <td>{(item.quantity * item.price).toFixed(2)}</td>
+        <div className="section-content">
+          <h1>Inventory Table</h1>
+          <table>
+            <thead>
+              <tr>
+                <th onClick={() => handleSort("product_id")}>Product ID</th>
+                <th onClick={() => handleSort("product_name")}>Product Name</th>
+                <th onClick={() => handleSort("quantity")}>Quantity</th>
+                <th onClick={() => handleSort("price")}>$Price$</th>
+                <th onClick={() => handleSort("minimum")}>Minimum</th>
+                <th onClick={() => handleSort("maximum")}>Maximum</th>
+                <th onClick={() => handleSort("total_price")}>Total Price</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {sortedInventory.map((item, index) => (
+                <tr key={index}>
+                  <td>{item.product_id}</td>
+                  <td>{item.product_name}</td>
+                  <td>{item.quantity}</td>
+                  <td>{item.price}</td>
+                  <td>{item.minimum}</td>
+                  <td>{item.maximum}</td>
+                  <td>{(item.quantity * item.price).toFixed(2)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

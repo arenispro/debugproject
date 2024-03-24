@@ -131,27 +131,31 @@ const DeleteCategory: React.FC = () => {
       </div>
       {/* Render category table */}
       <div className="display-container">
-        <h1>Category Table</h1>
-        <table>
-          <thead>
-            <tr>
-              <th onClick={() => handleSort("category_id")}>Category Id</th>
-              <th onClick={() => handleSort("category_name")}>Category Name</th>
-              <th onClick={() => handleSort("category_description")}>
-                Category Description
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {sortedCategory.map((item, index) => (
-              <tr key={index}>
-                <td>{item.category_id}</td>
-                <td>{item.category_name}</td>
-                <td>{item.category_description}</td>
+        <div className="section-content">
+          <h1>Category Table</h1>
+          <table>
+            <thead>
+              <tr>
+                <th onClick={() => handleSort("category_id")}>Category Id</th>
+                <th onClick={() => handleSort("category_name")}>
+                  Category Name
+                </th>
+                <th onClick={() => handleSort("category_description")}>
+                  Category Description
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {sortedCategory.map((item, index) => (
+                <tr key={index}>
+                  <td>{item.category_id}</td>
+                  <td>{item.category_name}</td>
+                  <td>{item.category_description}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

@@ -133,25 +133,29 @@ const DeleteVariant: React.FC = () => {
       </div>
       {/* Render variant table */}
       <div className="display-container">
-        <h1>Variant Table</h1>
-        <table>
-          <thead>
-            <tr>
-              <th onClick={() => handleSort("variant_id")}>Variant Id</th>
-              <th onClick={() => handleSort("variant_name")}>Variant Name</th>
-              <th onClick={() => handleSort("variant_value")}>Variant Value</th>
-            </tr>
-          </thead>
-          <tbody>
-            {sortedVariant.map((item, index) => (
-              <tr key={index}>
-                <td>{item.variant_id}</td>
-                <td>{item.variant_name}</td>
-                <td>{item.variant_value}</td>
+        <div className="section-content">
+          <h1>Variant Table</h1>
+          <table>
+            <thead>
+              <tr>
+                <th onClick={() => handleSort("variant_id")}>Variant Id</th>
+                <th onClick={() => handleSort("variant_name")}>Variant Name</th>
+                <th onClick={() => handleSort("variant_value")}>
+                  Variant Value
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {sortedVariant.map((item, index) => (
+                <tr key={index}>
+                  <td>{item.variant_id}</td>
+                  <td>{item.variant_name}</td>
+                  <td>{item.variant_value}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

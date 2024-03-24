@@ -4,6 +4,17 @@
   margin-top: 50px;
 }
 
+.dashboard-section {
+  margin-bottom: 200px;
+}
+
+.section-content {
+  max-height: 300px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
 .box {
   width: 300px;
   padding: 20px;

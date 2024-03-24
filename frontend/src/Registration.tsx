@@ -42,14 +42,14 @@ const Registration: React.FC = () => {
 
       // Verify that all required boxes have been filled. If not set the error message to be displayed.
       if (
-        firstName == "" ||
-        lastName == "" ||
-        email == "" ||
-        username == "" ||
-        password == "" ||
-        confirmPassword == "" ||
-        address == "" ||
-        role == ""
+        firstName === "" ||
+        lastName === "" ||
+        email === "" ||
+        username === "" ||
+        password === "" ||
+        confirmPassword === "" ||
+        address === "" ||
+        role === ""
       ) {
         setError("Please complete the required boxes.");
         return;
@@ -184,9 +184,9 @@ const Registration: React.FC = () => {
             onChange={(e) => setRole(e.target.value)}
           >
             <option value=""> Select Role </option>
-            <option value="Manager"> Manager </option>
-            <option value="Boss"> Boss </option>
-            <option value="Worker"> Worker </option>
+            <option value="manager"> Manager </option>
+            <option value="boss"> Boss </option>
+            <option value="worker"> Worker </option>
           </select>
 
           <button onClick={handleRegistration}>Register</button>
